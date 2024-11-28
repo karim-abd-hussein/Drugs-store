@@ -1,7 +1,7 @@
 
-const orders=require('../models/orders');
-const {emitDruggist} = require('../services/socket');
-const { verifyToken } = require('../services/auth');
+const orders=require('../../models/orders');
+const {emitDruggist} = require('../../services/socket');
+const { verifyToken } = require('../../services/auth');
 
 
 async function createOrder(req,res){

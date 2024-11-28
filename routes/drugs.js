@@ -4,7 +4,7 @@ const {
      retrieveByClassification,
      retrieveByClassificationOrName
 
- } = require('../controllers/drugs');
+ } = require('../src/controllers/drugs');
 
 const router=express.Router();
 
