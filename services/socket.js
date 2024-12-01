@@ -21,6 +21,8 @@ io.on('connection',(socket)=>{
 
     io.on('register',async (token)=>{
 
+        try
+        {
        const payload= await verifyToken(token);
 
       const notifications= await retrieveQueueNotif(payload.id);
@@ -30,21 +32,23 @@ io.on('connection',(socket)=>{
         io.to(socket.id).emit('order','change status');
 
       });
+
       
        connectedDruggists.set(payload.id,socket.id);
 
+    } catch (error){
+
+        console.error(error);
+
+    }
     })
 
-    io.on('disconnect',()=>{
-
-        console.log(socket.id);
-
-    });
     });
 
 
  function emitDruggist(druggistId,orderId){
 
+    
     const socketId= connectedDruggists.get(druggistId);
 
     if(socketId){

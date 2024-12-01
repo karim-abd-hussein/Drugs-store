@@ -2,31 +2,45 @@ const express=require('express');
 const { 
     insert,
      retrieveByClassification,
-     retrieveByClassificationOrName
+     retrieveByClassificationOrName,
+     deleteDrug,
+     updateDrug
 
- } = require('../src/controllers/drugs');
+ } = require('../controllers/drugs');
 
 const router=express.Router();
 
 
-router.post('/insert',(req,res)=>{
+router.post('/insert',(req,res,next)=>{
 
-insert(req,res);
+insert(req,res,next);
 
 });
 
-router.get('/browsebycategory/:classification',(req,res)=>{
+router.get('/browsebycategory/:classification',(req,res,next)=>{
 
-retrieveByClassification(req,res);
+retrieveByClassification(req,res,next);
 
 
 })
 
 
-router.get('/searchbyitem/:item',(req,res)=>{
+router.get('/searchbyitem/:item',(req,res,next)=>{
 
-    retrieveByClassificationOrName(req,res);
+    retrieveByClassificationOrName(req,res,next);
     })
+
+router.delete('/delete',(req,res,next)=>{
+
+  deleteDrug(req,res,next);
+
+})
+
+router.put('/update',(req,res,next)=>{
+
+    updateDrug(req,res,next);
+
+})
     
 
 module.exports=router;

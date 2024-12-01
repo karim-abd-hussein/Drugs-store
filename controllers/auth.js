@@ -3,44 +3,38 @@ const registration=require('../models/auth');
 const { generateToken } = require('../services/auth');
 
 
-async function signUp(req,res){
+async function signUp(req,res,next){
 
+    try{
     const id=uuidv4();
     req.body.id=id;
-
-const result= await registration.signUp(req.body);
-
-if(result==='sign up successfully'){
-
+     await registration.signUp(req.body);
     const phone=req.body.phone;
     const token=generateToken(phone,id);
     res.cookie('token',token).json({massage:'sign up successfully',token});
-}else{
+   }catch (err){
 
-    res.status(400).json({ message: result });
-}
+    next(err);
 
-
-}
-
-async function logIn(req,res){
-
-const result=await registration.logIn(req.body);
-const massage=result.massage;
-
-if(massage==='log in successfully'){
-
-    const phone=result.result.phone;
-    const id=result.result.id;
-    
-    const token=generateToken(phone,id);
-    return res.cookie('token',token).json({massage:'log in successfully',token});
+   }
 
 }
 
-return res.status(400).json({massage});
+async function logIn(req,res,next){
+
+    try{
+        const result= await registration.logIn(req.body);
+        const phone=result.phone;
+        const id=result.id;
+        
+        const token=generateToken(phone,id);
+         res.cookie('token',token).json({massage:'log in successfully',token});
+    }catch (err){
+
+       next(err);
+    }
 
     
     }
 
-module.exports={signUp,logIn}
+module.exports={signUp,logIn};

@@ -1,18 +1,27 @@
 const { v4: uuidv4 } = require('uuid');
 const drugs=require('../models/drugs');
 
-function insert(req,res){
+function insert(req,res,next){
 
+        try {
+    
+                const body=req.body;
+                body.id=uuidv4();
+                drugs.insert(body);
+                res.json({massage:'data inserted successfully'});
 
-     const body=req.body;
-        body.id=uuidv4();
-        drugs.insert(body);
+        } catch (error) {
 
-        res.json({massage:'data inserted successfully'});
+                next(error);
+                
+        }
+    
 
 }
 
-async function retrieveByClassification(req,res) {
+async function retrieveByClassification(req,res,next) {
+        
+        try {
         
         const classification=req.params.classification;
 
@@ -20,20 +29,71 @@ async function retrieveByClassification(req,res) {
 
        res.json(result);
 
+        } catch (error) {
+        
+               next(error);
+        }
+        
+
 }
 
-async function retrieveByClassificationOrName(req,res) {
+async function retrieveByClassificationOrName(req,res,next) {
         
-        const item=req.params.item;
+        try {
+       
+                const item=req.params.item;
 
-        const result =await drugs.retrieveByClassificationOrName(item);
-
+                const result =await drugs.retrieveByClassificationOrName(item);
+        
                 res.json(result);
+
+        } catch (error) {
+                
+               next(error);
+        }
+
+       
+
+}
+
+function deleteDrug(req,res,next){
+
+        try{
+
+               const drugId=req.body.drugId;
+
+               drugs.deleteDrug(drugId);
+
+               res.json({massage:"success deleting"});
+
+        } catch (err){
+
+                next(err);
+        }
+
+}
+
+function updateDrug(req,res,next){
+
+        try{
+
+               const drug=req.body;
+
+               drugs.updateDrug(drug);
+
+               res.json({massage:"success updating"});
+
+        } catch (err){
+
+                next(err);
+        }
 
 }
 
 module.exports={
         insert,
         retrieveByClassification,
-        retrieveByClassificationOrName
+        retrieveByClassificationOrName,
+        deleteDrug,
+        updateDrug
 };

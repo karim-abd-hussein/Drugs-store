@@ -15,7 +15,7 @@ async function createOrder(req){
         
     } catch (error) {
         
-        console.error(error);
+        throw error;
     }
 
 
@@ -34,7 +34,7 @@ async function  insertOrderDetails(body,orderId) {
         
     } catch (error) {
         
-    console.error(error);
+        throw error;
     
     }
     
@@ -50,7 +50,7 @@ async function retrieveMyOrders(payload,status) {
 
     } catch (error) {
        
-        console.error(error);
+        throw error;
     }
    
 
@@ -77,7 +77,7 @@ async function changeStatus(orderId,status) {
         
     } catch (error) {
         
-        console.error(error);
+        throw error;
     }
     
 
@@ -92,7 +92,7 @@ async function getOrderById(orderId) {
         
     } catch (error) {
         
-        console.error(error);
+        throw error;
     }
 
 }
@@ -110,7 +110,7 @@ async function retrieveDruggistUnpaidOrders(payload) {
         
     } catch (error) {
         
-        console.error(error);
+        throw error;
     }
     
 }

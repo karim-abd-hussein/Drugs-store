@@ -3,20 +3,42 @@ require('dotenv').config();
 
 async function verifyToken(token){
 
-    if(token){
+    try {
+   
+        if(!token){
 
-        return await jwt.verify(token,process.env.SECRET_KEY);
+            throw new Error("Token is required");
+     
+         }
+     
+         return await jwt.verify(token,process.env.SECRET_KEY);
 
+    } catch (error) {
+        
+        throw error;
     }
-
-    return null;
+   
+    
 
 }
 
 async function generateToken(phone,id){
 
-    return jwt.sign({id,phone},process.env.SECRET_KEY);
+    try{
+    if(!phone||!id)
+        throw new Error("expect phone or id");
+        
+
+    return await jwt.sign({id,phone},process.env.SECRET_KEY);
  
+} catch (error){
+
+
+    throw error;
+    
+}
+
+
  }
 
 module.exports={verifyToken,generateToken};

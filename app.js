@@ -24,15 +24,29 @@ app.use(cookieParser());
 const authRouter=require('./routes/auth');
 const drugsRouter=require('./routes/drugs');
 const ordersRouter=require('./routes/orders');
+app.get('/',(req,res)=>{
 
+        res.send(req.method);
+})
 app.use('/auth',authRouter);
 app.use('/drugs',drugsRouter);
 app.use('/orders',ordersRouter);
 
 
+app.use((err,req,res,next)=>{
 
-server.listen(process.env.PORT||5000,()=>{
+        const massage=err.massage||"Interval server error";
+        const status=500;
 
-console.log(`Running on PORT ${process.env.PORT}...`);
+        res
+        .status(status)
+        .json({massage,status});
+
+});
+
+
+server.listen(5000,()=>{
+
+console.log(`Running on PORT 5000...`);
 
 })

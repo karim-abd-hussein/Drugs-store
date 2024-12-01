@@ -22,7 +22,7 @@ const db=require('../services/db');
 
     } catch (error) {
         
-        console.error(error);
+        throw error;
     }
     
 
@@ -39,7 +39,7 @@ async function retrieveByClassification(classification){
 
     } catch (err){
 
-        console.error(err);
+        throw err;
     }
     
 
@@ -60,13 +60,62 @@ async function retrieveByClassificationOrName(item){
         
     } catch (error) {
      
-        console.error(error);
+        throw error;
     }
   
 }
 
+ function deleteDrug(drugId) {
+    
+    try{
+    const query=`delete from drugs where id=?`;
+
+    db.query(query,[drugId]);
+    }catch (err){
+
+        throw err;
+    }
+}
+
+function updateDrug(drug) {
+
+    const query=`update drugs
+    scientificName=?,
+    tradeName=?,
+    classification=?,
+    manufacturer=?,
+    availableQuantity=?,
+    expirationDate=?,
+    price=?
+where id=?`;
+
+const {
+    id,
+    scientificName,
+    tradeName,
+    classification,
+    manufacturer,
+    availableQuantity,
+    expirationDate,
+    price
+} = drug;
+
+
+    try{
+
+    db.query(query,[scientificName,tradeName,classification,manufacturer,availableQuantity,expirationDate,price,id]);
+    }catch (err){
+
+        throw err;
+    }
+}
+
+
+
 module.exports={
     insert,
     retrieveByClassification,
-    retrieveByClassificationOrName
+    retrieveByClassificationOrName,
+    deleteDrug,
+    updateDrug
 };

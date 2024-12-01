@@ -2,17 +2,17 @@ const express=require('express');
 
 const router=express.Router();
 
-const {signUp,logIn}=require('../src/controllers/auth');
+const {signUp,logIn}=require('../controllers/auth');
 
-router.post('/signup',(req,res)=>{
+router.post('/signup',(req,res,next)=>{
 
-signUp(req,res);
+signUp(req,res,next);
 
 })
 
-router.post('/login',(req,res)=>{
+router.post('/login',(req,res,next)=>{
 
-    logIn(req,res);
+    logIn(req,res,next);
     })
 
 module.exports=router;
