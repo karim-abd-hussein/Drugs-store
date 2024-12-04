@@ -5,7 +5,7 @@ async function createOrder(req){
 
     try {
 
-                const id=uuidv4();
+         const id=uuidv4();
         const druggistId=req.payload.id;
         const body=req.body;
 
@@ -26,19 +26,18 @@ async function  insertOrderDetails(body,orderId) {
     try {
     
         await body.forEach(async drug => {
-    
+            
             const id=uuidv4();
             await db.query('insert into orderDetails values(?,?,?,?) ',[id,drug.id,orderId,drug.quantity]);
     
         });
         
     } catch (error) {
-        
+
         throw error;
     
     }
     
-
 }
 
 async function retrieveMyOrders(payload,status) {

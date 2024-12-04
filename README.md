@@ -60,8 +60,9 @@ npm start
 | app.js
 ├── controllers/     # Route controllers
 ├── models/          # Database models
-├── routes/          # API route definitions
-├── services/         # Socket.IO setup and handlers
+├── routes/           # API route definitions
+|   services/         # All external services
+├── socket.js         # Socket.IO setup and handlers
 ├── .gitignore           # Files and directories to ignore in Git
 ├── package.json         # Project dependencies and scripts
 └── README.md            # Project documentation

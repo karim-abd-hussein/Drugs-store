@@ -12,7 +12,7 @@ async function queueNotif(notif) {
         
     } catch (error) {
         
-        console.error(error);
+        throw error;
     }
 
 }
@@ -24,7 +24,6 @@ async function retrieveQueueNotif(druggistId) {
         
         const query=`select * from notifications 
         where druggistId=?
-        orderby notDate
         `;
 
         const result=await db.query(query,[druggistId]);
@@ -34,7 +33,7 @@ async function retrieveQueueNotif(druggistId) {
 
     } catch (error) {
 
-        console.error(error);
+        throw error;
         
     }
         

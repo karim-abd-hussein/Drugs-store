@@ -1,14 +1,13 @@
 
 const orders=require('../models/orders');
-const {emitDruggist} = require('../services/socket');
 const { verifyToken } = require('../services/auth');
+const { emitDruggist } = require('../socket');
 
 
 async function createOrder(req,res,next){
 
     try {
-    
-        const payload=await verifyToken(req.cookies.token);
+     const payload=await verifyToken(req.cookies.token);
     req.payload=payload;
     await orders.createOrder(req);
    
@@ -46,7 +45,6 @@ async function changeStatus(req,res,next) {
     try{
 
     const params=req.params;
-
     await orders.changeStatus(params.orderId,params.status);
 
     const order= await orders.getOrderById(params.orderId);
